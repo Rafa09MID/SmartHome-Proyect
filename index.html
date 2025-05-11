@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casa Inteligente</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Control de la Casa Inteligente</h1>
+
+  <div class="control">
+    <h2>Cochera</h2>
+    <button onclick="controlarCochera('abierto')">Abrir Cochera</button>
+    <button onclick="controlarCochera('cerrado')">Cerrar Cochera</button>
+  </div>
+
+  <div class="control">
+    <h2>Cocina</h2>
+    <button onclick="controlarCocina('foco apagado')">Foco Apagado</button>
+    <button onclick="controlarCocina('foco encendido')">Foco Encendido</button>
+  </div>
+
+  <div class="control">
+    <h2>Sala</h2>
+    <button onclick="controlarSala('foco apagado')">Foco Apagado</button>
+    <button onclick="controlarSala('foco encendido')">Foco Encendido</button>
+  </div>
+
+  <div class="control">
+    <h2>Entrada</h2>
+    <button onclick="controlarEntrada('foco apagado')">Foco Apagado</button>
+    <button onclick="controlarEntrada('foco encendido')">Foco Encendido</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
