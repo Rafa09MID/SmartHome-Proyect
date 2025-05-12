@@ -1,38 +1,48 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Casa Inteligente</title>
+  <title>SmartHome Control</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Control de la Casa Inteligente</h1>
 
-  <div class="control">
+  <h1>Control de tu Casa Inteligente</h1>
+
+  <div class="seccion" id="cochera">
     <h2>Cochera</h2>
-    <button onclick="controlarCochera('abierto')">Abrir Cochera</button>
-    <button onclick="controlarCochera('cerrado')">Cerrar Cochera</button>
+    <button onclick="toggleControl('cochera', 'abierto', 'cerrado')">🚗 Abrir/Cerrar</button><br>
+    <button onclick="toggleModo('cochera')">🔁 Cambiar Modo</button>
+    <p id="estado-modo-cochera">Modo actual: ...</p>
+    <p id="estado-control-cochera">Estado: ...</p>
   </div>
 
-  <div class="control">
+  <div class="seccion" id="cocina">
     <h2>Cocina</h2>
-    <button onclick="controlarCocina('foco apagado')">Foco Apagado</button>
-    <button onclick="controlarCocina('foco encendido')">Foco Encendido</button>
+    <button onclick="toggleControl('cocina', 'foco encendido', 'foco apagado')">💡 Encender/Apagar Foco</button><br>
+    <button onclick="toggleModo('cocina')">🔁 Cambiar Modo</button>
+    <p id="estado-modo-cocina">Modo actual: ...</p>
+    <p id="estado-control-cocina">Estado: ...</p>
   </div>
 
-  <div class="control">
+  <div class="seccion" id="sala">
     <h2>Sala</h2>
-    <button onclick="controlarSala('foco apagado')">Foco Apagado</button>
-    <button onclick="controlarSala('foco encendido')">Foco Encendido</button>
+    <button onclick="toggleControl('sala', 'foco encendido', 'foco apagado')">💡 Encender/Apagar Foco</button><br>
+    <button onclick="toggleModo('sala')">🔁 Cambiar Modo</button>
+    <p id="estado-modo-sala">Modo actual: ...</p>
+    <p id="estado-control-sala">Estado: ...</p>
   </div>
 
-  <div class="control">
+  <div class="seccion" id="entrada">
     <h2>Entrada</h2>
-    <button onclick="controlarEntrada('foco apagado')">Foco Apagado</button>
-    <button onclick="controlarEntrada('foco encendido')">Foco Encendido</button>
+    <button onclick="toggleControl('entrada', 'foco encendido', 'foco apagado')">💡 Encender/Apagar Foco</button><br>
+    <button onclick="toggleModo('entrada')">🔁 Cambiar Modo</button>
+    <p id="estado-modo-entrada">Modo actual: ...</p>
+    <p id="estado-control-entrada">Estado: ...</p>
   </div>
 
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
