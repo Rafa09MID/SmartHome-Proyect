@@ -1,63 +1,51 @@
-// Función para controlar la cochera
-function controlarCochera(estado) {
-  fetch(`https://smarthome-teamrafa-default-rtdb.firebaseio.com/casa/cochera.json`, {
-    method: 'PUT',
-    body: JSON.stringify({ estado: estado }),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log("Estado de la cochera actualizado:", data);
-  })
-  .catch(error => console.error("Error al actualizar la cochera:", error));
+// Configura tu Firebase aquí
+var firebaseConfig = {
+  apiKey: "AIzaSyBXpvGO2elpynhQAHQfR3MAeGibhfienAQ",
+  authDomain: "smarthome-teamrafa.firebaseapp.com",
+  databaseURL: "https://smarthome-teamrafa-default-rtdb.firebaseio.com",
+  projectId: "smarthome-teamrafa",
+  storageBucket: "smarthome-teamrafa.firebasestorage.app",
+  messagingSenderId: "910175756115",
+  appId: "1:910175756115:web:0492ca59f35db1fd9f0ba6",
+};
+
+firebase.initializeApp(firebaseConfig);
+
+// Cambiar estado manual
+function toggleControl(seccion, onValor, offValor) {
+  const ref = firebase.database().ref(`${seccion}/control_manual`);
+  ref.once('value').then(snapshot => {
+    const actual = snapshot.val();
+    const nuevo = actual === onValor ? offValor : onValor;
+    ref.set(nuevo);
+    document.getElementById(`estado-control-${seccion}`).innerText = `Estado: ${nuevo}`;
+  });
 }
 
-// Función para controlar la cocina
-function controlarCocina(estado) {
-  fetch(`https://smarthome-teamrafa-default-rtdb.firebaseio.com/casa/cocina.json`, {
-    method: 'PUT',
-    body: JSON.stringify({ estado: estado }),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log("Estado de la cocina actualizado:", data);
-  })
-  .catch(error => console.error("Error al actualizar la cocina:", error));
+// Cambiar modo automático/manual
+function toggleModo(seccion) {
+  const ref = firebase.database().ref(`${seccion}/modo_automatico`);
+  ref.once('value').then(snapshot => {
+    const actual = snapshot.val();
+    ref.set(!actual).then(() => {
+      document.getElementById(`estado-modo-${seccion}`).innerText = `Modo actual: ${!actual ? 'Manual' : 'Automático'}`;
+    });
+  });
 }
 
-// Función para controlar la sala
-function controlarSala(estado) {
-  fetch(`https://smarthome-teamrafa-default-rtdb.firebaseio.com/casa/sala.json`, {
-    method: 'PUT',
-    body: JSON.stringify({ estado: estado }),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log("Estado de la sala actualizado:", data);
-  })
-  .catch(error => console.error("Error al actualizar la sala:", error));
+// Cargar estados al inicio
+function cargarEstados() {
+  const secciones = ['cochera', 'cocina', 'sala', 'entrada'];
+  secciones.forEach(seccion => {
+    firebase.database().ref(`${seccion}/modo_automatico`).once('value').then(snapshot => {
+      const modo = snapshot.val();
+      document.getElementById(`estado-modo-${seccion}`).innerText = `Modo actual: ${modo ? 'Automático' : 'Manual'}`;
+    });
+    firebase.database().ref(`${seccion}/control_manual`).once('value').then(snapshot => {
+      const estado = snapshot.val();
+      document.getElementById(`estado-control-${seccion}`).innerText = `Estado: ${estado}`;
+    });
+  });
 }
 
-// Función para controlar la entrada
-function controlarEntrada(estado) {
-  fetch(`https://smarthome-teamrafa-default-rtdb.firebaseio.com/casa/entrada.json`, {
-    method: 'PUT',
-    body: JSON.stringify({ estado: estado }),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log("Estado de la entrada actualizado:", data);
-  })
-  .catch(error => console.error("Error al actualizar la entrada:", error));
-}
+window.onload = cargarEstados;
