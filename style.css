@@ -1,63 +1,28 @@
-* {
-  box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0;
-  padding: 0;
+const firebaseUrl = "https://smarthome-teamrafa-default-rtdb.firebaseio.com/";
+
+function actualizarEstadoCochera() {
+  fetch(firebaseUrl + "cochera/estado.json")
+    .then(res => res.json())
+    .then(data => {
+      const estadoEl = document.getElementById("estado-cochera");
+      if (data === "abierto") {
+        estadoEl.textContent = "🚗 Cochera Abierta";
+        estadoEl.className = "status abierto";
+      } else if (data === "cerrado") {
+        estadoEl.textContent = "🔒 Cochera Cerrada";
+        estadoEl.className = "status cerrado";
+      } else {
+        estadoEl.textContent = "Estado desconocido";
+        estadoEl.className = "status loading";
+      }
+    })
+    .catch(err => {
+      document.getElementById("estado-cochera").textContent = "⚠️ Error de conexión";
+      document.getElementById("estado-cochera").className = "status loading";
+      console.error(err);
+    });
 }
 
-body {
-  background: linear-gradient(to right, #4facfe, #00f2fe);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  color: #333;
-}
-
-.card {
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 30px 40px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-  text-align: center;
-  max-width: 400px;
-  width: 90%;
-}
-
-h1 {
-  margin-bottom: 1rem;
-  font-size: 28px;
-  color: #222;
-}
-
-.status {
-  font-size: 24px;
-  margin-top: 20px;
-  font-weight: bold;
-  padding: 15px;
-  border-radius: 8px;
-  transition: background 0.3s, color 0.3s;
-}
-
-.abierto {
-  background-color: #c2fbd7;
-  color: #067d68;
-  border: 2px solid #067d68;
-}
-
-.cerrado {
-  background-color: #ffd5d5;
-  color: #b10000;
-  border: 2px solid #b10000;
-}
-
-.loading {
-  color: #666;
-  font-style: italic;
-}
-
-footer {
-  margin-top: 25px;
-  font-size: 12px;
-  color: #888;
-}
+// Actualiza cada 2 segundos
+setInterval(actualizarEstadoCochera, 2000);
+actualizarEstadoCochera(); // Primera ejecución
