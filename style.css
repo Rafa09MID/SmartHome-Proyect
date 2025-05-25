@@ -1,28 +1,43 @@
-const firebaseUrl = "https://smarthome-teamrafa-default-rtdb.firebaseio.com/";
-
-function actualizarEstadoCochera() {
-  fetch(firebaseUrl + "cochera/estado.json")
-    .then(res => res.json())
-    .then(data => {
-      const estadoEl = document.getElementById("estado-cochera");
-      if (data === "abierto") {
-        estadoEl.textContent = "🚗 Cochera Abierta";
-        estadoEl.className = "status abierto";
-      } else if (data === "cerrado") {
-        estadoEl.textContent = "🔒 Cochera Cerrada";
-        estadoEl.className = "status cerrado";
-      } else {
-        estadoEl.textContent = "Estado desconocido";
-        estadoEl.className = "status loading";
-      }
-    })
-    .catch(err => {
-      document.getElementById("estado-cochera").textContent = "⚠️ Error de conexión";
-      document.getElementById("estado-cochera").className = "status loading";
-      console.error(err);
-    });
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f5f6fa;
+  color: #2f3640;
+  margin: 0;
+  padding: 20px;
 }
 
-// Actualiza cada 2 segundos
-setInterval(actualizarEstadoCochera, 2000);
-actualizarEstadoCochera(); // Primera ejecución
+h1 {
+  text-align: center;
+  color: #273c75;
+}
+
+.log-container {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  height: 400px;
+  overflow-y: auto;
+}
+
+.log-entry {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-left: 4px solid #44bd32;
+  background: #f0f9f0;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.log-entry.alerta {
+  border-left-color: #e84118;
+  background: #fff0f0;
+}
+
+.log-entry.info {
+  border-left-color: #0097e6;
+  background: #f0f8ff;
+}
+
